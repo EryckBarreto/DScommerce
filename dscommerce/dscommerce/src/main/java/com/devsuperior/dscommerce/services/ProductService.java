@@ -27,7 +27,7 @@ public class ProductService {
 //        return dto;
 
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado."));
         return new ProductDTO(product);
 
     }
