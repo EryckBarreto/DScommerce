@@ -27,15 +27,17 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable) {
-        Page<ProductDTO> dto = service.findAll(pageable);
+    public ResponseEntity<Page<ProductDTO>> findAll(
+            @RequestParam(name = "name", defaultValue = "")
+            String name, Pageable pageable) {
+        Page<ProductDTO> dto = service.findAll(name, pageable);
         return ResponseEntity.ok(dto);
     }
 
     @PostMapping
     public ResponseEntity<ProductDTO> insert(@Valid @RequestBody ProductDTO dto) {
         dto = service.insert(dto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id")
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
